@@ -30,8 +30,10 @@ import im.vector.app.core.dispatchers.CoroutineDispatchers
 import im.vector.app.core.error.ErrorFormatter
 import im.vector.app.core.network.WifiDetector
 import im.vector.app.core.pushers.PushersManager
+import im.vector.app.core.services.GuardServiceStarter
 import im.vector.app.core.utils.AssetReader
 import im.vector.app.core.utils.DimensionConverter
+import im.vector.app.di.FlavorModule
 import im.vector.app.features.call.conference.JitsiActiveConferenceHolder
 import im.vector.app.features.call.webrtc.WebRtcCallManager
 import im.vector.app.features.configuration.VectorConfiguration
@@ -70,7 +72,7 @@ import org.matrix.android.sdk.api.raw.RawService
 import org.matrix.android.sdk.api.session.Session
 import javax.inject.Singleton
 
-@Component(modules = [VectorModule::class])
+@Component(modules = [VectorModule::class, FlavorModule::class])
 @Singleton
 interface VectorComponent {
 
@@ -175,6 +177,8 @@ interface VectorComponent {
     fun coroutineDispatchers(): CoroutineDispatchers
 
     fun jitsiActiveConferenceHolder(): JitsiActiveConferenceHolder
+
+    fun guardServiceStarter(): GuardServiceStarter
 
     @Component.Factory
     interface Factory {
