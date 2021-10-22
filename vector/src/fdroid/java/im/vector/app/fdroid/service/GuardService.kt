@@ -24,8 +24,8 @@ import im.vector.app.features.notifications.NotificationUtils
 import timber.log.Timber
 
 /**
- * This no-op foreground service acts as a deterrent for the system
- * to avoid eagerly killing the app process.
+ * This no-op foreground service acts as a deterrent to the system eagerly killing the app process.
+ *
  * Keeping the app process alive avoids some OEMs ignoring scheduled WorkManager and AlarmManager tasks
  * when the app is not in the foreground.
  */
