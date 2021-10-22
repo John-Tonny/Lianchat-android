@@ -25,7 +25,6 @@ import android.content.res.Configuration
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.StrictMode
-import androidx.core.content.ContextCompat
 import androidx.core.provider.FontRequest
 import androidx.core.provider.FontsContractCompat
 import androidx.lifecycle.Lifecycle
@@ -47,7 +46,6 @@ import im.vector.app.core.di.VectorComponent
 import im.vector.app.core.extensions.configureAndStart
 import im.vector.app.core.extensions.startSyncing
 import im.vector.app.core.rx.RxConfig
-import im.vector.app.core.services.GuardServiceStarter
 import im.vector.app.features.call.webrtc.WebRtcCallManager
 import im.vector.app.features.configuration.VectorConfiguration
 import im.vector.app.features.disclaimer.doNotShowDisclaimerDialog
@@ -101,7 +99,6 @@ class VectorApplication :
     @Inject lateinit var pinLocker: PinLocker
     @Inject lateinit var callManager: WebRtcCallManager
     @Inject lateinit var invitesAcceptor: InvitesAcceptor
-    @Inject lateinit var guardServiceStarter: GuardServiceStarter
 
     lateinit var vectorComponent: VectorComponent
 
@@ -171,7 +168,6 @@ class VectorApplication :
         if (authenticationService.hasAuthenticatedSessions() && !activeSessionHolder.hasActiveSession()) {
             val lastAuthenticatedSession = authenticationService.getLastAuthenticatedSession()!!
             activeSessionHolder.setActiveSession(lastAuthenticatedSession)
-            guardServiceStarter.start()
             lastAuthenticatedSession.configureAndStart(applicationContext, startSyncing = false)
         }
 
