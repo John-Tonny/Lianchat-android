@@ -802,6 +802,9 @@ class LoginViewModel @AssistedInject constructor(
                     data.isOutdatedHomeserver) {
                 // Notify the UI
                 _viewEvents.post(LoginViewEvents.OutdatedHomeserver)
+            }else{
+                // john 20210715
+                handleUpdateSignMode(LoginAction.UpdateSignMode(SignMode.SignIn))
             }
         }
     }
@@ -816,5 +819,14 @@ class LoginViewModel @AssistedInject constructor(
 
     fun getFallbackUrl(forSignIn: Boolean, deviceId: String?): String? {
         return authenticationService.getFallbackUrl(forSignIn, deviceId)
+    }
+
+    // john 20210715
+    fun setServerTypeToOther() {
+        setState {
+            copy(
+                    serverType = ServerType.Other
+            )
+        }
     }
 }

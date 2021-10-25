@@ -68,6 +68,9 @@ class LoginFragment @Inject constructor() : AbstractSSOLoginFragment<FragmentLog
         setupSubmitButton()
         setupForgottenPasswordButton()
 
+        // john 20210715
+        setupLoginSignupButton()
+
         views.passwordField.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 submit()
@@ -79,6 +82,14 @@ class LoginFragment @Inject constructor() : AbstractSSOLoginFragment<FragmentLog
 
     private fun setupForgottenPasswordButton() {
         views.forgetPasswordButton.setOnClickListener { forgetPasswordClicked() }
+    }
+
+    // john 20210715
+    private fun setupLoginSignupButton() {
+        views.loginSigninSignup.setOnClickListener { signUp() }
+    }
+    private fun signUp() {
+        loginViewModel.handle(LoginAction.UpdateSignMode(SignMode.SignUp))
     }
 
     private fun setupAutoFill(state: LoginViewState) {
@@ -169,6 +180,11 @@ class LoginFragment @Inject constructor() : AbstractSSOLoginFragment<FragmentLog
                 SignMode.SignInWithMatrixId -> R.string.login_connect_to
             }
 
+            // john 20210715
+            if(state.signMode == SignMode.SignUp) {
+                views.loginSigninSignup.isVisible = false
+            }
+
             when (state.serverType) {
                 ServerType.MatrixOrg -> {
                     views.loginServerIcon.isVisible = true
@@ -186,6 +202,10 @@ class LoginFragment @Inject constructor() : AbstractSSOLoginFragment<FragmentLog
                     views.loginServerIcon.isVisible = false
                     views.loginTitle.text = getString(resId, state.homeServerUrlFromUser.toReducedUrl())
                     views.loginNotice.text = getString(R.string.login_server_other_text)
+
+                    // john 20210715
+                    views.loginNotice.isVisible = false
+
                 }
                 ServerType.Unknown   -> Unit /* Should not happen */
             }

@@ -57,7 +57,12 @@ class LoginSplashFragment @Inject constructor(
     }
 
     private fun getStarted() {
-        loginViewModel.handle(LoginAction.PostViewEvent(LoginViewEvents.OpenServerSelection))
+        // loginViewModel.handle(LoginAction.PostViewEvent(LoginViewEvents.OpenServerSelection))
+
+        // john 20210715
+        val serverUrl = "https://im.server.vpubchain.net"
+        loginViewModel.setServerTypeToOther()
+        loginViewModel.handle(LoginAction.UpdateHomeServer(serverUrl))
     }
 
     override fun resetViewModel() {
