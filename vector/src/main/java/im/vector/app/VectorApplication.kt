@@ -75,6 +75,10 @@ import java.util.concurrent.Executors
 import javax.inject.Inject
 import androidx.work.Configuration as WorkConfiguration
 
+// import android.app.ActivityManager
+// import android.os.Process
+import cn.jpush.android.api.JPushInterface
+
 class VectorApplication :
         Application(),
         HasVectorInjector,
@@ -203,6 +207,11 @@ class VectorApplication :
         })
 
         EmojiManager.install(GoogleEmojiProvider())
+
+        //if(shouldInit()) {
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
+        //}
     }
 
     private val startSyncOnFirstStart = object : LifecycleObserver {
@@ -275,4 +284,19 @@ class VectorApplication :
         handlerThread.start()
         return Handler(handlerThread.looper)
     }
+    /*
+    private fun shouldInit(): Boolean {
+        val am = getSystemService(ACTIVITY_SERVICE) as ActivityManager
+        val processInfos = am.runningAppProcesses
+        val mainProcessName = packageName
+        val myPid: Int = Process.myPid()
+        for (info in processInfos) {
+            if (info.pid == myPid && mainProcessName == info.processName) {
+                return true
+            }
+        }
+        return false
+    }
+     */
+
 }
